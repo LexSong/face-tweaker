@@ -19,5 +19,10 @@ def get_face_encoding(image):
     return face_encoding
 
 
+def get_face_encoding_from_image(path):
+    image = fr.load_image_file(path)
+    return get_face_encoding(image)
+
+
 def get_face_distance(a, b):
     return fr.face_distance([a], b)[0]
