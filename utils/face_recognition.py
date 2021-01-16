@@ -1,11 +1,14 @@
 import face_recognition as fr
+import numpy as np
+from PIL.Image import Image
 
 
 class FaceNotFoundError(Exception):
     pass
 
 
-def get_face_encoding(image):
+def get_face_encoding(image: Image):
+    image = np.array(image)
     face_locations = fr.face_locations(image)
     if not face_locations:
         raise FaceNotFoundError
@@ -17,11 +20,6 @@ def get_face_encoding(image):
     largest_face = max(face_locations, key=rect_area)
     face_encoding = fr.face_encodings(image, [largest_face])[0]
     return face_encoding
-
-
-def get_face_encoding_from_image(path):
-    image = fr.load_image_file(path)
-    return get_face_encoding(image)
 
 
 def get_face_distance(a, b):
