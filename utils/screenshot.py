@@ -1,4 +1,3 @@
-import numpy as np
 import win32gui
 from PIL import ImageGrab
 
@@ -23,11 +22,8 @@ def get_hwnd_by_title_prefix(title_prefix):
     raise WindowNotFoundError(f'Can\'t find window title starts with "{title_prefix}"')
 
 
-class ScreenGrabber:
-    def __init__(self, title_prefix):
-        self.hwnd = get_hwnd_by_title_prefix(title_prefix)
-
-    def grab_screenshot(self):
-        win32gui.SetForegroundWindow(self.hwnd)
-        bbox = win32gui.GetWindowRect(self.hwnd)
-        return np.array(ImageGrab.grab(bbox))
+def get_screenshot(title_prefix):
+    hwnd = get_hwnd_by_title_prefix(title_prefix)
+    win32gui.SetForegroundWindow(hwnd)
+    bbox = win32gui.GetWindowRect(hwnd)
+    return ImageGrab.grab(bbox)
