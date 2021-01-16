@@ -1,0 +1,6 @@
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - face_recognition
+  - pywin32
