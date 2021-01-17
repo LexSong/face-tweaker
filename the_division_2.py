@@ -6,6 +6,7 @@ from optuna.distributions import CategoricalDistribution
 from optuna.distributions import IntUniformDistribution
 from optuna.trial import Trial
 from PIL import Image
+from tqdm import tqdm
 
 from utils.face_recognition import get_face_distance
 from utils.face_recognition import get_face_encoding
@@ -116,7 +117,7 @@ distributions = {
     "Jawline": IntUniformDistribution(0, 12),
 }
 
-for filename, screenshot in screenshot_folder.items():
+for filename, screenshot in tqdm(screenshot_folder.items(), ascii=True):
     params = filename_to_params(filename)
     encoding = get_face_encoding(screenshot)
     distance = get_face_distance(encoding, target_encoding)
