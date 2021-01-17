@@ -40,10 +40,12 @@ def filename_to_params(filename) -> dict:
         "Cheeks",
         "Jawline",
     ]
-    params = dict(zip(keys, values))
-    for k in params:
-        if k != "Body Type":
-            params[k] = int(params[k])
+    params = dict()
+    for k, v in zip(keys, values):
+        if k == "Body Type":
+            params[k] = v
+        else:
+            params[k] = int(v)
     return params
 
 
