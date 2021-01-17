@@ -127,3 +127,7 @@ for filename, screenshot in tqdm(screenshot_folder.items(), ascii=True):
     study.add_trial(trial)
 
 study.optimize(objective, n_trials=10)
+
+print()
+print("Best settings:")
+print_params(study.best_params)
