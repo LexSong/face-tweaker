@@ -84,16 +84,18 @@ def objective(trial: Trial):
             print_params(trial.params)
             os.system("pause")
             screenshot = get_screenshot("Tom Clancy's The Division 2")
+
+            # Save and load screenshot from the folder
+            # Ensure get_face_encoding() can get the same results
+            filename = params_to_filename(trial.params)
+            screenshot_folder[filename] = screenshot
+            screenshot = screenshot_folder[filename]
+
             encoding = get_face_encoding(screenshot)
             distance = get_face_distance(encoding, target_encoding)
-            break
+            return distance
         except Exception:
             traceback.print_exc()
-
-    filename = params_to_filename(trial.params)
-    screenshot_folder[filename] = screenshot
-
-    return distance
 
 
 study = optuna.create_study()
