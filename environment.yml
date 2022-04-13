@@ -1,5 +1,5 @@
+---
 channels:
-  - defaults
   - conda-forge
 dependencies:
   - face_recognition
@@ -7,6 +7,5 @@ dependencies:
   - numpy
   - optuna
   - pillow
-  - python=3.8
   - pywin32
   - tqdm
