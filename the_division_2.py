@@ -4,6 +4,7 @@ import traceback
 import optuna
 from optuna.distributions import CategoricalDistribution
 from optuna.distributions import IntUniformDistribution
+from optuna.samplers import TPESampler
 from optuna.trial import Trial
 from PIL import Image
 from tqdm import tqdm
@@ -101,7 +102,9 @@ def objective(trial: Trial):
             traceback.print_exc()
 
 
-study = optuna.create_study()
+study = optuna.create_study(
+    sampler=TPESampler(multivariate=True),
+)
 
 # Load existed screenshots
 distributions = {
