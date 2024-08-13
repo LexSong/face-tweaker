@@ -123,9 +123,7 @@ for filename, screenshot in tqdm(screenshot_folder.items(), ascii=True):
     params = filename_to_params(filename)
     encoding = get_face_encoding(screenshot)
     distance = get_face_distance(encoding, target_encoding)
-    trial = optuna.create_trial(
-        params=params, distributions=distributions, value=distance
-    )
+    trial = optuna.create_trial(params=params, distributions=distributions, value=distance)
     study.add_trial(trial)
 
 study.optimize(objective, n_trials=10)
