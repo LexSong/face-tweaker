@@ -15,6 +15,8 @@ from utils.imagefolder import ImageFolder
 from utils.screenshot import get_screenshot
 
 
+PREFERRED_HEAD_TYPES = list(range(20))
+
 target_image = Image.open("data/target.jpg")
 target_encoding = get_face_encoding(target_image)
 
@@ -71,7 +73,7 @@ def print_params(params: dict) -> None:
 def objective(trial: Trial):
     # trial.suggest_categorical("Body Type", ["Male", "Female"])
     trial.suggest_categorical("Body Type", ["Female"])
-    trial.suggest_categorical("Head", range(20))
+    trial.suggest_categorical("Head", PREFERRED_HEAD_TYPES)
     trial.suggest_int("Brow Height", 0, 12)
     trial.suggest_int("Brow Depth", 0, 12)
     trial.suggest_int("Eyeline", 0, 12)
@@ -109,7 +111,7 @@ study = optuna.create_study(
 # Load existed screenshots
 distributions = {
     "Body Type": CategoricalDistribution(choices=("Male", "Female")),
-    "Head": CategoricalDistribution(choices=list(range(20))),
+    "Head": CategoricalDistribution(choices=PREFERRED_HEAD_TYPES),
     "Brow Height": IntUniformDistribution(0, 12),
     "Brow Depth": IntUniformDistribution(0, 12),
     "Eyeline": IntUniformDistribution(0, 12),
@@ -124,6 +126,8 @@ distributions = {
 
 for filename, screenshot in tqdm(screenshot_folder.items(), ascii=True):
     params = filename_to_params(filename)
+    if params["Head"] not in PREFERRED_HEAD_TYPES:
+        continue
     encoding = get_face_encoding(screenshot)
     distance = get_face_distance(encoding, target_encoding)
     trial = optuna.create_trial(params=params, distributions=distributions, value=distance)
